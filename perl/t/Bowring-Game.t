@@ -25,6 +25,14 @@ sub _roll_many {
     }
 }
 
+sub _roll_spare {
+    my ($self, $n, $pins) = @_;
+    my $game = $self->{game};
+
+    $game->role(5);
+    $game->role(5);
+}
+
 sub gutter_game : Tests {
     my ($self) = @_;
     my $game = $self->{game};
@@ -39,6 +47,16 @@ sub all_one_game : Tests {
 
     $self->_roll_many(20, 1);
     is $game->score, 20, 'score of all 1 game is 20';
+}
+
+sub one_spare_game : Tests {
+    my ($self) = @_;
+    my $game = $self->{game};
+
+    $self->_roll_spare;
+    $game->role(3);
+    $self->_roll_many(17, 0);
+    is $game->score, 16, 'score of game with only 1 spare is 16';
 }
 
 Test::Class->runtests;
