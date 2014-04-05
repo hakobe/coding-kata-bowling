@@ -11,4 +11,12 @@ sub new {
     return $self;
 }
 
+sub role {
+    my ($self) = @_;
+}
+
+sub score {
+    return 0
+}
+
 1;
