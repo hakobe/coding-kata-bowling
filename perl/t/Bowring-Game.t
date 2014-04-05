@@ -77,6 +77,14 @@ sub one_strike_game : Tests {
     is $game->score, 24, 'score of game with only 1 strike is 24';
 }
 
+sub perfect_game : Tests {
+    my ($self) = @_;
+    my $game = $self->{game};
+
+    $self->_roll_many(12, 10);
+    is $game->score, 300, 'score of perfect game is 300';
+}
+
 Test::Class->runtests;
 
 1;
