@@ -23,26 +23,57 @@ sub role {
 
 sub score {
     my ($self) = @_;
-    return sum map {
-        my $frame_n = $_;
-
-        $self->is_spare($frame_n) ?
-            10 + $self->pins_of_roll($frame_n * 2 + 2) :
-            (  $self->pins_of_roll($frame_n * 2)
-             + $self->pins_of_roll($frame_n * 2 + 1) );
-    } (0..9)
-}
-
-sub is_spare {
-    my ($self, $frame_n) = @_;
-    return
-        (  $self->pins_of_roll($frame_n * 2)
-         + $self->pins_of_roll($frame_n * 2 + 1) ) == 10;
+    my $score = 0;
+    my $frame_index = 0;
+    for (0..9) {
+        if ( $self->is_strike($frame_index) ) {
+            $score += 10 + $self->strike_bonus($frame_index);
+            $frame_index += 1;
+        } elsif ( $self->is_spare($frame_index) ) {
+            $score += 10 + $self->spare_bonus($frame_index);
+            $frame_index += 2;
+        } else {
+            $score += $self->sum_of_pins_in_frame($frame_index);
+            $frame_index += 2;
+        }
+    }
+    return $score;
 }
 
 sub pins_of_roll {
     my ($self, $roll_n) = @_;
     return $self->{rolls}->[$roll_n];
+}
+
+sub is_strike {
+    my ($self, $frame_index) = @_;
+    return $self->pins_of_roll($frame_index) == 10;
+}
+
+sub is_spare {
+    my ($self, $frame_index) = @_;
+    return
+        (  $self->pins_of_roll($frame_index)
+         + $self->pins_of_roll($frame_index + 1) ) == 10;
+}
+
+sub sum_of_pins_in_frame {
+    my ($self, $frame_index) = @_;
+    return $self->pins_of_roll($frame_index)
+         + $self->pins_of_roll($frame_index + 1);
+}
+
+sub strike_bonus {
+    my ($self, $frame_index) = @_;
+
+    return $self->pins_of_roll($frame_index + 1)
+         + $self->pins_of_roll($frame_index + 2);
+}
+
+sub spare_bonus {
+    my ($self, $frame_index) = @_;
+
+    return $self->pins_of_roll($frame_index + 2)
 }
 
 1;
