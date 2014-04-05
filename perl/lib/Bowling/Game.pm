@@ -6,17 +6,20 @@ sub new {
     my ($class) = @_;
 
     my $self = bless {
+        score => 0,
     }, $class;
 
     return $self;
 }
 
 sub role {
-    my ($self) = @_;
+    my ($self, $score) = @_;
+    $self->{score} += $score;
 }
 
 sub score {
-    return 0
+    my ($self) = @_;
+    return $self->{score};
 }
 
 1;
