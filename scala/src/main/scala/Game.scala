@@ -25,19 +25,11 @@ class Game {
     result
   }
 
-  private def isStrike(rollIndex: Int) : Boolean = {
-    rolls(rollIndex) == 10
-  }
+  private def isStrike(rollIndex: Int) : Boolean = rolls(rollIndex) == 10
 
-  private def isSpare(rollIndex: Int) : Boolean = {
-    (rolls(rollIndex) + rolls(rollIndex + 1)) == 10
-  }
+  private def isSpare(rollIndex: Int) : Boolean = rolls(rollIndex) + rolls(rollIndex + 1) == 10
 
-  private def strikeBonus(rollIndex: Int) : Int = {
-    rolls(rollIndex+1) + rolls(rollIndex+2)
-  }
+  private def strikeBonus(rollIndex: Int) : Int = rolls(rollIndex+1) + rolls(rollIndex+2)
 
-  private def spareBonus(rollIndex: Int) : Int = {
-    rolls(rollIndex+2)
-  }
+  private def spareBonus(rollIndex: Int) : Int = rolls(rollIndex+2)
 }

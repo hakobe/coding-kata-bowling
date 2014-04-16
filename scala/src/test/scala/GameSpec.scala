@@ -6,15 +6,13 @@ class GameSpec extends Specification {
   trait game extends Scope {
     val game = new Game()
 
-    def rollMany(n: Integer, pins: Integer) : Unit = {
+    def rollMany(n: Integer, pins: Integer) : Unit =
       for ( i <- 1 to n) {
         game.roll(pins)
       }
-    }
 
-    def rollStrike() : Unit = {
+    def rollStrike() : Unit =
       game.roll(10)
-    }
 
     def rollSpare() : Unit = {
       game.roll(5)
