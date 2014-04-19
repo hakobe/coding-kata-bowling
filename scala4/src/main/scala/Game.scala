@@ -16,7 +16,7 @@ class Game {
       if (isStrike(i)) {
         result += 10 + strikeBonus(i)
         i += 1
-      } else if (isSpare(i)) { // strike
+      } else if (isSpare(i)) {
         result += 10 + spareBonus(i)
         i += 2
       } else {
